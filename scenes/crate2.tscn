@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdlk3g250ptfv"]
+
+[ext_resource type="Script" path="res://scripts/crate.gd" id="1_o7pgj"]
+[ext_resource type="Texture2D" uid="uid://hos0dfmiudvn" path="res://assets/Sunnyside_World_Assets/Elements/Crops/crate_base.png" id="2_ep4vj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5con2"]
+friction = 0.8
+bounce = 0.2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwwq5"]
+size = Vector2(8, 13)
+
+[node name="Crate" type="RigidBody2D" groups=["Defect"]]
+collision_layer = 16
+collision_mask = 87
+input_pickable = true
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_5con2")
+can_sleep = false
+script = ExtResource("1_o7pgj")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_ep4vj")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -12.0
+offset_right = 20.0
+offset_bottom = 11.0
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_dwwq5")
+
+[node name="CratePrompt" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = -20.0
+offset_top = -34.0
+offset_right = 20.0
+offset_bottom = -11.0
+text = "F"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

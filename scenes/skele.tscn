@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://c26bpe65s262t"]
+
+[ext_resource type="Script" path="res://scripts/skele.gd" id="1_seihl"]
+[ext_resource type="Texture2D" uid="uid://bm6atqpu6wc28" path="res://assets/Sunnyside_World_Assets/Characters/Skeleton/PNG/skeleton_idle_strip6.png" id="1_ur2mc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7n7wg"]
+atlas = ExtResource("1_ur2mc")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8iry3"]
+atlas = ExtResource("1_ur2mc")
+region = Rect2(96, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ikcs"]
+atlas = ExtResource("1_ur2mc")
+region = Rect2(192, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg854"]
+atlas = ExtResource("1_ur2mc")
+region = Rect2(288, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0vbw"]
+atlas = ExtResource("1_ur2mc")
+region = Rect2(384, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g6x8"]
+atlas = ExtResource("1_ur2mc")
+region = Rect2(480, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d175f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7n7wg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8iry3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ikcs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg854")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p0vbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1g6x8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lrq0p"]
+size = Vector2(10, 12)
+
+[node name="skele" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 51
+script = ExtResource("1_seihl")
+
+[node name="HP" type="Label" parent="."]
+offset_left = -19.0
+offset_top = -27.0
+offset_right = 21.0
+offset_bottom = -4.0
+theme_override_font_sizes/font_size = 15
+text = "var:"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_d175f")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.00106504
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_lrq0p")
