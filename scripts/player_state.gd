@@ -1,0 +1,19 @@
+extends Node2D
+class_name PlayerState
+
+@export var animation_name: String
+@export var move_speed: int
+
+var parent: Player
+
+func enter() -> void:
+	parent.animation.play(animation_name)
+func exit() -> void:
+	pass
+
+func process_input(event:InputEvent) -> PlayerState:
+	return null
+func process_frame(delta: float) -> PlayerState:
+	return null
+func process_physics(delta: float) -> PlayerState:
+	return null
