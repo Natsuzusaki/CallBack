@@ -350,6 +350,10 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
+[node name="ObjectOutTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [node name="JumpSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_7txwo")
 volume_db = -10.0
@@ -359,3 +363,4 @@ volume_db = -10.0
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
 [connection signal="timeout" from="JumpVariableTimer" to="." method="_on_jump_variable_timer_timeout"]
 [connection signal="timeout" from="JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
+[connection signal="timeout" from="ObjectOutTimer" to="." method="_on_object_out_timer_timeout"]

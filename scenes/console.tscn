@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfan1cxcaqfbu"]
+[gd_scene load_steps=11 format=3 uid="uid://bfan1cxcaqfbu"]
 
 [ext_resource type="Script" path="res://scripts/console_panel.gd" id="1_7qxwa"]
 [ext_resource type="Texture2D" uid="uid://dvybo0cpsfghf" path="res://icon.svg" id="1_gj5jf"]
 [ext_resource type="FontFile" uid="uid://bp83qou1fslbk" path="res://assets/fonts/PixelOperator8.ttf" id="2_her8x"]
+[ext_resource type="Script" path="res://scripts/scriptvalidator.gd" id="2_kxyyb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ujx2k"]
 font = ExtResource("2_her8x")
@@ -96,9 +97,12 @@ _data = {
 [node name="Console" type="Area2D"]
 collision_layer = 16
 script = ExtResource("1_7qxwa")
-base_text = "print()
-pos()"
-header = "var a = 10"
+base_text = "enter code..."
+fixed_var = "var number = 5
+const SPEED = 10"
+
+[node name="TextValidator" type="Node2D" parent="."]
+script = ExtResource("2_kxyyb")
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(0, 59)
@@ -175,6 +179,7 @@ theme_override_fonts/font = ExtResource("2_her8x")
 theme_override_font_sizes/font_size = 8
 caret_blink = true
 gutters_draw_line_numbers = true
+code_completion_enabled = true
 indent_automatic = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true

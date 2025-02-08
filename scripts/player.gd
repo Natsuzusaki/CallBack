@@ -4,6 +4,7 @@ class_name Player
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var jump_variable_timer: Timer = $JumpVariableTimer
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
+@onready var object_out_timer: Timer = $ObjectOutTimer
 @onready var jump_sfx: AudioStreamPlayer = $JumpSFX
 @onready var animation = $Sprite
 @onready var pick_up_collision: CollisionShape2D = $PickUp_Area/PickUp_Collision
@@ -50,7 +51,6 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	state_machine.process_physics(delta)
 
-
 #Action Functions
 func gravity() -> float:
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
@@ -82,7 +82,7 @@ func carry() -> void:
 	elif is_carrying and not is_carry_pressed:
 		is_carry_pressed = true
 		is_carrying = not is_carrying
-		pick_up_collision.disabled = false
+		object_out_timer.start()
 		on_interact.emit()
 
 #Timers
@@ -94,6 +94,8 @@ func _on_jump_variable_timer_timeout() -> void:
 			velocity.y = -100
 func _on_jump_buffer_timer_timeout() -> void:
 	jump_buffered = false
+func _on_object_out_timer_timeout() -> void:
+	pick_up_collision.disabled = false
 
 #Area Triggers
 func _on_pick_up_area_body_entered(body: Node2D) -> void:

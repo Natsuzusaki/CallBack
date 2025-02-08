@@ -4,20 +4,20 @@ extends RigidBody2D
 @onready var Scollision: CollisionShape2D = $SCollision
 @onready var Dcollision: CollisionShape2D = $DCollision
 @onready var player: CharacterBody2D = null
-@onready var slot: Area2D = null
-var value := 0
+@onready var slot: Control = null
+var value = null
 var is_carried := false
 
-signal pass_value()
+signal pass_value_to_pickupslot()
 
 func _ready() -> void:
-	value = randi_range(1,15) if not value else value
-	if value < 10:
-		Scollision.disabled = false
-		Dcollision.disabled = true
-	elif value > 9:
-		Scollision.disabled = true
-		Dcollision.disabled = false
+	value = randi_range(1,15) if not value and not value == 0 else value
+	#if value < 10:
+		#Scollision.disabled = false
+		#Dcollision.disabled = true
+	#elif value > 9:
+		#Scollision.disabled = true
+		#Dcollision.disabled = false
 	if not player or not slot:
 		slot = get_tree().get_current_scene().find_child("PickUp_Slot")
 		player = get_tree().get_current_scene().find_child("Player")
@@ -35,12 +35,13 @@ func _on_interact() -> void:
 		if not is_carried:
 			freeze = false
 			apply_torque(200000 * player.static_direction)
-			apply_impulse(Vector2(5000 * player.static_direction, -2000))
+			apply_impulse(Vector2(5000 * player.static_direction, -3000))
 
 func _in_area(body: Node2D) -> void:
 	if body == self:
-		await emit_signal("pass_value", value)
-		queue_free()
+		await emit_signal("pass_value_to_pickupslot", value)
+		if value is int:
+			queue_free()
 
 func _process(delta: float) -> void:
 	#print(global_position) #WHATT?!?!?!?!?
@@ -48,5 +49,5 @@ func _process(delta: float) -> void:
 		global_position += Vector2.ZERO
 		global_position = player.global_position + Vector2(0, -15)
 
-func initialize(new_value: int) -> void:
+func initialize(new_value) -> void:
 	value = new_value

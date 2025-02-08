@@ -3,9 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://dvybo0cpsfghf" path="res://icon.svg" id="1_sc8p5"]
 [ext_resource type="PackedScene" uid="uid://c2udgjcetsli8" path="res://scenes/player.tscn" id="2_urjg7"]
 [ext_resource type="PackedScene" uid="uid://cpmp4bujrpjva" path="res://scenes/object.tscn" id="3_d656e"]
-[ext_resource type="PackedScene" uid="uid://dt8d1yxyocqtj" path="res://scenes/pick_up_slot.tscn" id="4_oannj"]
 [ext_resource type="PackedScene" uid="uid://bfan1cxcaqfbu" path="res://scenes/console.tscn" id="5_ngwkw"]
 [ext_resource type="Script" path="res://scripts/follow_camera.gd" id="6_16kxh"]
+[ext_resource type="PackedScene" uid="uid://ba5axojyo8end" path="res://scenes/printer.tscn" id="7_ock11"]
+[ext_resource type="PackedScene" uid="uid://be7qsmwlyx7w2" path="res://scenes/gate.tscn" id="8_sggcs"]
+[ext_resource type="PackedScene" uid="uid://b11yggyqs050q" path="res://scenes/code_blocks.tscn" id="9_o0lcb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x8k5d"]
 size = Vector2(428, 126)
@@ -13,15 +15,13 @@ size = Vector2(428, 126)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n7qna"]
 size = Vector2(138, 34)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ke8m3"]
-size = Vector2(28, 161.5)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qalpa"]
 size = Vector2(28, 162)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hiejg"]
-
 [node name="Test" type="Node2D"]
+
+[node name="Gate" parent="." instance=ExtResource("8_sggcs")]
+position = Vector2(-316, 0)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 2
@@ -36,6 +36,15 @@ texture = ExtResource("1_sc8p5")
 position = Vector2(0, 64)
 shape = SubResource("RectangleShape2D_x8k5d")
 
+[node name="Icon6" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(-432.5, 64)
+scale = Vector2(3.36719, 1)
+texture = ExtResource("1_sc8p5")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-432, 64)
+shape = SubResource("RectangleShape2D_x8k5d")
+
 [node name="Icon2" type="Sprite2D" parent="StaticBody2D"]
 position = Vector2(218.5, -19.5)
 scale = Vector2(1.08594, 0.273438)
@@ -46,22 +55,13 @@ position = Vector2(218.5, -19.5)
 shape = SubResource("RectangleShape2D_n7qna")
 
 [node name="Icon3" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-226.5, -20.5)
+position = Vector2(-316.5, -144.5)
 scale = Vector2(1.08594, 0.273438)
 texture = ExtResource("1_sc8p5")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-226.5, -20.5)
+position = Vector2(-316.5, -144.5)
 shape = SubResource("RectangleShape2D_n7qna")
-
-[node name="Icon4" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-277, -120.5)
-scale = Vector2(0.21875, 1.25781)
-texture = ExtResource("1_sc8p5")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-277, -120.75)
-shape = SubResource("RectangleShape2D_ke8m3")
 
 [node name="Icon5" type="Sprite2D" parent="StaticBody2D"]
 position = Vector2(279, -122)
@@ -72,31 +72,33 @@ texture = ExtResource("1_sc8p5")
 position = Vector2(279, -122)
 shape = SubResource("RectangleShape2D_qalpa")
 
+[node name="Console" parent="." instance=ExtResource("5_ngwkw")]
+position = Vector2(209, -115)
+
+[node name="Printer" parent="." node_paths=PackedStringArray("console_connect") instance=ExtResource("7_ock11")]
+position = Vector2(102, -155)
+console_connect = NodePath("../Console")
+
+[node name="Code_Blocks" parent="." node_paths=PackedStringArray("output_1") instance=ExtResource("9_o0lcb")]
+offset_left = -227.0
+offset_top = -89.0
+offset_right = -227.0
+offset_bottom = -89.0
+output_1 = NodePath("../Gate")
+
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="Object" parent="Objects" instance=ExtResource("3_d656e")]
-position = Vector2(-239, -54)
+position = Vector2(-190, -23)
 
 [node name="Object2" parent="Objects" instance=ExtResource("3_d656e")]
-position = Vector2(-168, -122)
+position = Vector2(-123, -33)
 
 [node name="Object3" parent="Objects" instance=ExtResource("3_d656e")]
-position = Vector2(-113, -108)
+position = Vector2(105, -37)
 
 [node name="Object4" parent="Objects" instance=ExtResource("3_d656e")]
-position = Vector2(-204, -83)
-
-[node name="PickUp_Slot" parent="." instance=ExtResource("4_oannj")]
-position = Vector2(-110, -56)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUp_Slot"]
-shape = SubResource("RectangleShape2D_hiejg")
-
-[node name="Console" parent="." instance=ExtResource("5_ngwkw")]
-position = Vector2(187, -116)
-
-[node name="Console2" parent="." instance=ExtResource("5_ngwkw")]
-position = Vector2(89, -79)
+position = Vector2(61, -25)
 
 [node name="Player" parent="." instance=ExtResource("2_urjg7")]
 position = Vector2(-65, -51)
