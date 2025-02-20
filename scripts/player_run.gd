@@ -8,11 +8,12 @@ func enter() -> void:
 	super.enter()
 	parent.debug.text = "run"
 
-func process_input(event: InputEvent) -> PlayerState:
+func process_input(_event: InputEvent) -> PlayerState:
 	if Input.is_action_pressed("carry"):
 		parent.carry()
-	if Input.is_action_pressed("jump"):
-		if parent.is_on_floor() or parent.can_coyote_jump:
+	if Input.is_action_just_pressed("jump"):
+		if (parent.is_on_floor() or parent.can_coyote_jump ) and not parent.is_jump_pressed:
+			parent.is_jump_pressed = true
 			parent.jump_variable_timer.start()
 			parent.jump()
 			if parent.can_coyote_jump:
@@ -28,8 +29,9 @@ func process_physics(delta: float) -> PlayerState:
 		return idle_state
 	return null
 
-func process_frame(delta: float) -> PlayerState:
-	if parent.jump_buffered and parent.is_on_floor():
+func process_frame(_delta: float) -> PlayerState:
+	if parent.jump_buffered and parent.is_on_floor() and not parent.is_jump_pressed:
+		parent.is_jump_pressed = true
 		parent.jump_variable_timer.start()
 		parent.jump()
 	if parent.velocity.y > 0 and not parent.is_on_floor():

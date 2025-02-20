@@ -6,6 +6,10 @@
 [node name="Printer" type="Node2D"]
 script = ExtResource("1_vg6ij")
 
+[node name="InstanceTime" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [node name="Icon2" type="Sprite2D" parent="."]
 position = Vector2(0, -28)
 scale = Vector2(0.0351563, 0.453125)

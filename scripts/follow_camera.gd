@@ -2,10 +2,10 @@ extends Camera2D
 
 @onready var player: CharacterBody2D = null
 @onready var console: Area2D = null
+@export var zoom_out: float
+@export var zoom_in: float
 var interact := false
 var zoom_speed := 1
-var zoom_out := 1.5
-var zoom_in := 3.5
 
 func _ready() -> void:
 	zoom = Vector2(2, 2)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://dl7xkakrgftd"]
+[gd_scene load_steps=13 format=3 uid="uid://dl7xkakrgftd"]
 
 [ext_resource type="Texture2D" uid="uid://dvybo0cpsfghf" path="res://icon.svg" id="1_sc8p5"]
 [ext_resource type="PackedScene" uid="uid://c2udgjcetsli8" path="res://scenes/player.tscn" id="2_urjg7"]
-[ext_resource type="PackedScene" uid="uid://cpmp4bujrpjva" path="res://scenes/object.tscn" id="3_d656e"]
+[ext_resource type="PackedScene" uid="uid://cpmp4bujrpjva" path="res://scenes/int_object.tscn" id="3_d656e"]
+[ext_resource type="PackedScene" uid="uid://okiqhyadjhg0" path="res://scenes/str_object.tscn" id="3_jqoym"]
 [ext_resource type="PackedScene" uid="uid://bfan1cxcaqfbu" path="res://scenes/console.tscn" id="5_ngwkw"]
 [ext_resource type="Script" path="res://scripts/follow_camera.gd" id="6_16kxh"]
 [ext_resource type="PackedScene" uid="uid://ba5axojyo8end" path="res://scenes/printer.tscn" id="7_ock11"]
@@ -72,12 +73,18 @@ texture = ExtResource("1_sc8p5")
 position = Vector2(279, -122)
 shape = SubResource("RectangleShape2D_qalpa")
 
+[node name="Str_Object2" parent="." instance=ExtResource("3_jqoym")]
+position = Vector2(-508, -227)
+
+[node name="Str_Object" parent="." instance=ExtResource("3_jqoym")]
+position = Vector2(-445, -187)
+
 [node name="Console" parent="." instance=ExtResource("5_ngwkw")]
 position = Vector2(209, -115)
 
-[node name="Printer" parent="." node_paths=PackedStringArray("console_connect") instance=ExtResource("7_ock11")]
+[node name="Printer" parent="." node_paths=PackedStringArray("console") instance=ExtResource("7_ock11")]
 position = Vector2(102, -155)
-console_connect = NodePath("../Console")
+console = NodePath("../Console")
 
 [node name="Code_Blocks" parent="." node_paths=PackedStringArray("output_1") instance=ExtResource("9_o0lcb")]
 offset_left = -227.0
@@ -100,10 +107,12 @@ position = Vector2(105, -37)
 [node name="Object4" parent="Objects" instance=ExtResource("3_d656e")]
 position = Vector2(61, -25)
 
-[node name="Player" parent="." instance=ExtResource("2_urjg7")]
-position = Vector2(-65, -51)
-
 [node name="Camera" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 script = ExtResource("6_16kxh")
+zoom_out = 1.5
+zoom_in = 3.5
+
+[node name="Player" parent="." instance=ExtResource("2_urjg7")]
+position = Vector2(-54, -29)

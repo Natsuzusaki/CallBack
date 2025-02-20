@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bfan1cxcaqfbu"]
+[gd_scene load_steps=12 format=3 uid="uid://bfan1cxcaqfbu"]
 
 [ext_resource type="Script" path="res://scripts/console_panel.gd" id="1_7qxwa"]
 [ext_resource type="Texture2D" uid="uid://dvybo0cpsfghf" path="res://icon.svg" id="1_gj5jf"]
 [ext_resource type="FontFile" uid="uid://bp83qou1fslbk" path="res://assets/fonts/PixelOperator8.ttf" id="2_her8x"]
 [ext_resource type="Script" path="res://scripts/scriptvalidator.gd" id="2_kxyyb"]
+[ext_resource type="Script" path="res://scripts/datatype_changer.gd" id="4_bptkf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ujx2k"]
 font = ExtResource("2_her8x")
@@ -17,7 +18,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Panel:scale:x")
+tracks/0/path = NodePath("Terminal/Panel:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -28,7 +29,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Panel:scale:y")
+tracks/1/path = NodePath("Terminal/Panel:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -42,7 +43,7 @@ resource_name = "pop_down"
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Panel:scale:x")
+tracks/0/path = NodePath("Terminal/Panel:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -53,7 +54,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Panel:scale:y")
+tracks/1/path = NodePath("Terminal/Panel:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -67,7 +68,7 @@ resource_name = "pop_up"
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Panel:scale:x")
+tracks/0/path = NodePath("Terminal/Panel:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -78,7 +79,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Panel:scale:y")
+tracks/1/path = NodePath("Terminal/Panel:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -109,7 +110,14 @@ position = Vector2(0, 59)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_gj5jf")
 
-[node name="Control" type="Control" parent="."]
+[node name="DataType_Changer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_bptkf")
+
+[node name="Terminal" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -150.0
@@ -119,7 +127,7 @@ offset_bottom = 259.0
 scale = Vector2(0.6, 0.6)
 pivot_offset = Vector2(150, 200)
 
-[node name="Panel" type="Panel" parent="Control"]
+[node name="Panel" type="Panel" parent="Terminal"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -130,7 +138,7 @@ grow_horizontal = 2
 scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(100, 150)
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Terminal/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -142,23 +150,23 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Terminal/Panel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 7
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Terminal/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HSplitContainer" type="HSplitContainer" parent="Control/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="Terminal/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="Control/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Terminal/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 label_settings = SubResource("LabelSettings_ujx2k")
 
-[node name="Button" type="Button" parent="Control/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="Terminal/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
@@ -166,13 +174,13 @@ theme_override_fonts/font = ExtResource("2_her8x")
 theme_override_font_sizes/font_size = 8
 text = "execute"
 
-[node name="Exit" type="Button" parent="Control/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Exit" type="Button" parent="Terminal/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_her8x")
 theme_override_font_sizes/font_size = 8
 text = "X"
 
-[node name="CodeEdit" type="CodeEdit" parent="Control/Panel/MarginContainer/VBoxContainer"]
+[node name="CodeEdit" type="CodeEdit" parent="Terminal/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_her8x")
@@ -196,8 +204,8 @@ libraries = {
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
-[connection signal="pressed" from="Control/Panel/MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="Control/Panel/MarginContainer/VBoxContainer/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="focus_entered" from="Control/Panel/MarginContainer/VBoxContainer/CodeEdit" to="." method="_on_code_edit_focus_entered"]
-[connection signal="focus_exited" from="Control/Panel/MarginContainer/VBoxContainer/CodeEdit" to="." method="_on_code_edit_focus_exited"]
-[connection signal="lines_edited_from" from="Control/Panel/MarginContainer/VBoxContainer/CodeEdit" to="." method="_on_code_edit_lines_edited_from"]
+[connection signal="pressed" from="Terminal/Panel/MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Terminal/Panel/MarginContainer/VBoxContainer/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="focus_entered" from="Terminal/Panel/MarginContainer/VBoxContainer/CodeEdit" to="." method="_on_code_edit_focus_entered"]
+[connection signal="focus_exited" from="Terminal/Panel/MarginContainer/VBoxContainer/CodeEdit" to="." method="_on_code_edit_focus_exited"]
+[connection signal="lines_edited_from" from="Terminal/Panel/MarginContainer/VBoxContainer/CodeEdit" to="." method="_on_code_edit_lines_edited_from"]

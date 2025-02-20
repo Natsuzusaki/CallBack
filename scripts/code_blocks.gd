@@ -2,6 +2,8 @@ extends Control
 
 @export_multiline var statement: String
 @export var output_1: Node2D
+@export var output_2: Node2D
+@export var output_3: Node2D
 
 @onready var pick_up_slot: Control = $FirstLine/SecondLine/PickUp_Slot
 @onready var func_name: Label = $FirstLine/Func_name
@@ -18,7 +20,7 @@ func _ready() -> void:
 func _pass_value_from_pickupslot(value: int) -> void:
 	limit = value * -1
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if output_1.position.y > limit:
 		output_1.position.y -= 1
 	elif output_1.position.y < limit:

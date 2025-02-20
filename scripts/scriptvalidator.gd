@@ -1,6 +1,6 @@
 extends Node
 
-@onready var label: Label = $"../Control/Panel/MarginContainer/VBoxContainer/HBoxContainer/Label"
+@onready var label: Label = $"../Terminal/Panel/MarginContainer/VBoxContainer/HBoxContainer/Label"
 var control_regex = RegEx.new()
 #DO NOT TOUCH!!!
 #var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
@@ -148,3 +148,15 @@ func func_detector(user_code: String) -> bool:
 		if control_regex.search(line):
 			return false
 	return true
+
+func code_verify(error) -> bool:
+	if error == Error.ERR_PARSE_ERROR:
+		label.text = "Parse Error: \n Check your syntax!"
+		return true
+	elif error == Error.ERR_COMPILATION_FAILED:
+		label.text = "Compilation Error: \n There is a semantic error!"
+		return true
+	elif error != OK:
+		label.text = "Script Error: \n IDK where tho 😋"
+		return true
+	return false

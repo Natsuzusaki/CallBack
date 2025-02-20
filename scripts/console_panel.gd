@@ -6,16 +6,17 @@ extends Area2D
 
 @onready var player: CharacterBody2D = null
 @onready var camera: Camera2D = null
-@onready var label: Label = $Control/Panel/MarginContainer/VBoxContainer/HBoxContainer/Label
-@onready var code_edit: CodeEdit = $Control/Panel/MarginContainer/VBoxContainer/CodeEdit
+@onready var label: Label = $Terminal/Panel/MarginContainer/VBoxContainer/HBoxContainer/Label
+@onready var code_edit: CodeEdit = $Terminal/Panel/MarginContainer/VBoxContainer/CodeEdit
 @onready var pop_up_animation: AnimationPlayer = $"PopUp Animation"
-@onready var control: Control = $Control
+@onready var control: Control = $Terminal
 @onready var text_validator: Node2D = $TextValidator
 
 var valid := false 
 var restart_text := false
 var button_pressed := false
-var value = null
+var value = null #player script
+var array_value = [] #player script
 
 signal print_value()
 
@@ -41,6 +42,7 @@ func _init(real_console):
 
 func custom_print(message):
 	if console:
+		console.array_value.append(message)
 		console.value = message
 	else:
 		print('Error! something is wrong')
@@ -53,21 +55,24 @@ func run():
 		return
 	script.set_source_code(full_script)
 	var error = script.reload()
-	if error != OK:
-		label.text = "Script Error! \n IDK where tho 😋"
-	else:
+	if text_validator.code_verify(error):
+		return
+	elif error == Error.OK:
 		var instance = script.new(self)
 		add_child(instance)
 		if instance.has_method("run"):
 			instance.call("run")
 			instance.queue_free()
-		if not value and not value == 0:
+		if value == null:
 			value = null
 		else:
-			emit_signal("print_value", value)
+			print_value.emit(value, array_value)
+	else:
+		return
 
 #Terminal Interactions
 func _on_button_pressed() -> void:
+	array_value = []
 	player.stay = true
 	var user_code = code_edit.text
 	if user_code.is_empty():
@@ -81,12 +86,12 @@ func _on_exit_pressed() -> void:
 	pop_up_animation.play("pop_down")
 	await pop_up_animation.animation_finished
 	control.hide()
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	label.text = fixed_var
 	if not button_pressed:
 		control.show()
 		pop_up_animation.play("pop_up")
-func _on_body_exited(body: Node2D) -> void:
+func _on_body_exited(_body: Node2D) -> void:
 	if not button_pressed:
 		pop_up_animation.play("pop_down")
 	else:
@@ -100,7 +105,7 @@ func _on_code_edit_focus_entered() -> void:
 	camera.stay()
 func _on_code_edit_focus_exited() -> void:
 	player.stay = false
-func _on_code_edit_lines_edited_from(from_line: int, to_line: int) -> void:
+func _on_code_edit_lines_edited_from(_from_line: int, _to_line: int) -> void:
 	if restart_text:
 		label.text = fixed_var
 		restart_text = false

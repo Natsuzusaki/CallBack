@@ -6,16 +6,15 @@ extends PlayerState
 
 func enter() -> void:
 	super.enter()
-	parent.collision.position.y = -4
 	parent.debug.text = "fall"
 
 func exit() -> void:
-	parent.collision.position.y = 0
+	pass
 
-func process_input(event: InputEvent) -> PlayerState:
+func process_input(_event: InputEvent) -> PlayerState:
 	if Input.is_action_pressed("carry"):
 		parent.carry()
-	if Input.is_action_pressed("jump"):
+	if Input.is_action_just_pressed("jump"):
 		if not parent.is_on_floor():
 			if not parent.jump_buffered:
 				parent.jump_buffered = true
@@ -28,7 +27,7 @@ func process_physics(delta: float) -> PlayerState:
 	parent.move(delta, move_speed)
 	return null
 
-func process_frame(delta: float) -> PlayerState:
+func process_frame(_delta: float) -> PlayerState:
 	if parent.is_on_floor():
 		if Input.get_axis("left", "right"):
 			return run_state

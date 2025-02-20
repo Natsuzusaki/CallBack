@@ -11,9 +11,9 @@ func enter() -> void:
 func exit() -> void:
 	pass
 
-func process_input(event:InputEvent) -> PlayerState:
+func process_input(_event:InputEvent) -> PlayerState:
 	return null
-func process_frame(delta: float) -> PlayerState:
+func process_frame(_delta: float) -> PlayerState:
 	return null
-func process_physics(delta: float) -> PlayerState:
+func process_physics(_delta: float) -> PlayerState:
 	return null

@@ -7,12 +7,13 @@ func enter() -> void:
 	super.enter()
 	parent.debug.text = "idle"
 
-func process_input(event: InputEvent) -> PlayerState:
+func process_input(_event: InputEvent) -> PlayerState:
 	if Input.is_action_pressed("carry") and not parent.stay:
 		parent.carry()
 	if Input.get_axis("left", "right") and not parent.stay:
 		return run_state
-	if Input.is_action_pressed("jump") and parent.is_on_floor() and not parent.stay:
+	if Input.is_action_just_pressed("jump") and parent.is_on_floor() and not parent.stay and not parent.is_jump_pressed:
+		parent.is_jump_pressed = true
 		parent.jump_variable_timer.start()
 		parent.jump()
 		return jump_state
@@ -25,8 +26,9 @@ func process_physics(delta: float) -> PlayerState:
 	parent.move_and_slide()
 	return null
 
-func process_frame(delta: float) -> PlayerState:
-	if parent.jump_buffered and parent.is_on_floor():
+func process_frame(_delta: float) -> PlayerState:
+	if parent.jump_buffered and parent.is_on_floor() and not parent.is_jump_pressed:
+		parent.is_jump_pressed = true
 		parent.jump_variable_timer.start()
 		parent.jump()
 	return null
